@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Shelter</title>
+  <script>
+    // localStorage init
+    window.onload = () => {
+      document.getElementById("procrastinationList").value = localStorage.getItem("procrastinationList") || "";
+      document.getElementById("thoughtBox").value = localStorage.getItem("thoughtBox") || "";
+      document.body.style.backgroundImage = `url('${backgrounds[bgIndex]}')`;
+    };
+
+    function saveText(id) {
+      localStorage.setItem(id, document.getElementById(id).value);
+    }
+
+    const responses = {
+      "🍰": "You enjoy a sweet cake in your cozy tent...",
+      "🛋️": "You rest on the sofa, wrapped in a soft blanket.",
+      "🌧️": "You listen to the rain pattering gently on the tent roof.",
+      "💤": "You close your eyes. A peaceful nap begins..."
+    };
+
+    function react(emoji) {
+      document.getElementById("response").textContent = responses[emoji];
+    }
+
+    const backgrounds = [
+      "https://images.unsplash.com/photo-1506744038136-46273834b3fb",
+      "https://images.unsplash.com/photo-1507525428034-b723cf961d3e",
+      "https://images.unsplash.com/photo-1501785888041-af3ef285b470",
+      "https://images.unsplash.com/photo-1493246507139-91e8fad9978e"
+    ];
+    let bgIndex = 0;
+    function changeBackground() {
+      bgIndex = (bgIndex + 1) % backgrounds.length;
+      document.body.style.backgroundImage = `url('${backgrounds[bgIndex]}')`;
+    }
+  </script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      backdrop-filter: blur(2px);
+    }
+    .container {
+      background-color: rgba(255, 255, 255, 0.85);
+      max-width: 800px;
+      margin: 2rem auto;
+      padding: 2rem;
+      border-radius: 1rem;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    textarea {
+      width: 100%;
+      height: 100px;
+      margin-top: 0.5rem;
+      padding: 0.5rem;
+      font-size: 1rem;
+      border-radius: 0.5rem;
+      border: 1px solid #ccc;
+    }
+    button {
+      font-size: 1.5rem;
+      margin: 0.5rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    .bg-btn {
+      margin-top: 1rem;
+      background: #333;
+      color: white;
+      border-radius: 0.5rem;
+      padding: 0.5rem 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🏕️ Your Shelter</h1>
+
+    <p><strong>What are you putting off?</strong></p>
+    <textarea id="procrastinationList" oninput="saveText('procrastinationList')"></textarea>
+
+    <p><strong>Write your thoughts freely:</strong></p>
+    <textarea id="thoughtBox" oninput="saveText('thoughtBox')"></textarea>
+
+    <p><strong>Click how you're feeling inside the tent:</strong></p>
+    <div>
+      <button onclick="react('🍰')">🍰</button>
+      <button onclick="react('🛋️')">🛋️</button>
+      <button onclick="react('🌧️')">🌧️</button>
+      <button onclick="react('💤')">💤</button>
+    </div>
+    <p id="response" style="margin-top:1rem; font-style: italic;"></p>
+
+    <button class="bg-btn" onclick="changeBackground()">🔄 Change Window View</button>
+  </div>
+</body>
+</html>
